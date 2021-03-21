@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-03-21T13:51:25.848Z" agent="5.0 (Windows)" etag="cs8LVp7wOdmL--FdTHGG" version="14.4.9" type="github">
+<mxfile host="app.diagrams.net" modified="2021-03-21T13:57:08.626Z" agent="5.0 (Windows)" etag="O6rilCKCY_H0UbjLfVQe" version="14.4.9" type="github">
   <diagram id="aU2fkPUbuenyFV3609Mt" name="Page-1">
     <mxGraphModel dx="1278" dy="581" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -659,7 +659,7 @@
         <mxCell id="TqbUzDo-QN7CQFsw-WlE-18" value="FK" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;" vertex="1" parent="TqbUzDo-QN7CQFsw-WlE-17">
           <mxGeometry width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="TqbUzDo-QN7CQFsw-WlE-19" value="delivery_price_id" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="TqbUzDo-QN7CQFsw-WlE-17">
+        <mxCell id="TqbUzDo-QN7CQFsw-WlE-19" value="shipment_price_id" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="TqbUzDo-QN7CQFsw-WlE-17">
           <mxGeometry x="30" width="150" height="30" as="geometry" />
         </mxCell>
         <mxCell id="2xY_IK6gBtayw-Wv3xOb-290" value="" style="shape=partialRectangle;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;top=0;left=0;bottom=0;right=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2xY_IK6gBtayw-Wv3xOb-277" vertex="1">
