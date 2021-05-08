@@ -1,4 +1,4 @@
-#!d:\python_scoalait\waste_pickup_services\venv\scripts\python.exe
+#!D:\Python_ScoalaIT\donations_point\venv\Scripts\python.exe
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
 
