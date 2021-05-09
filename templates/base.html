@@ -27,7 +27,7 @@
                         {% if user.is_authenticated %}
                             {% include 'auth_user_menu.html' %}
                         {% else %}
-                            <a href="{% url 'users:login' %}">Login</a>
+                            <a href="{% url 'users:account:login' %}">Login</a>
                             <a id="register-link" href="users/register">Register</a>
                         {% endif %}
                     </div>
