@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'products.apps.ProductsConfig',
     'django.contrib.sites',
     'fontawesome-free',
     'users.apps.UsersConfig',
@@ -143,3 +144,5 @@ EMAIL_HOST_PASSWORD = config('EMAIL_PASS')
 DEFAULT_FROM_EMAIL = config('EMAIL_USER')
 
 SITE_ID = 2
+
+AUTH_USER_MODEL = 'users.AuthUser'

@@ -16,7 +16,10 @@
     <div class="auth-menu hide">
         <ul>
             <li><a>Profile</a></li>
+            {% comment %}
             <li><a href="users/logout">Logout</a></li>
+            {% endcomment %}
+            <li><a href="{% url 'users:account:logout' %}">Logout</a></li>
         </ul>
     </div>
 </div>

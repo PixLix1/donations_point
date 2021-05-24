@@ -1,16 +1,17 @@
-# This is a sample Python script.
+import random
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+cheer_up_list = ['You can do this!',
+                 'Hai, hai, trage tare!',
+                 ' :) :) :) ',
+                 ]
 
 
-# Press the green button in the gutter to run the script.
+def print_hi():
+    print(cheer_up_list[random.randint(0, len(cheer_up_list) - 1)])
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    print_hi()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# TO DO LIST:
+# if user has products, then is_staff = 1

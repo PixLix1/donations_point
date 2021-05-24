@@ -6,7 +6,8 @@ from donations_point.models import CustomModel
 AuthUserModel = get_user_model()
 
 
-# Create your models here.
+# # Create your models here.
+# class Users(CustomModel):
 class Address(CustomModel):
     user = models.ForeignKey(AuthUserModel, on_delete=models.CASCADE)
     street = models.CharField(max_length=255, null=False)
@@ -24,5 +25,5 @@ class Address(CustomModel):
 
 
 class Profile(CustomModel):
-    user = models.OneToOneField(AuthUserModel, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='profiles',)
+    user = models.OneToOneField(AuthUserModel, on_delete=models.CASCADE, related_name='profile')
+    avatar = models.ImageField(upload_to='profiles', default=None, null=True)

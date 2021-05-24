@@ -22,8 +22,9 @@ from donations_point.views import homepage_view, contact_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', homepage_view),
-    path('contact/', contact_view),
+    path('contact', contact_view),
     path('users/', include('users.urls')),
+    path('products/', include('products.urls')),
 ]
 
 if settings.DEBUG:

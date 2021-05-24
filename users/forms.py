@@ -112,7 +112,7 @@ class RegisterForm(forms.Form):
         password = self.cleaned_data.get('password')
 
         user = AuthUser.objects.create_user(
-            username=email,
+            # username=email,
             first_name=first_name,
             last_name=last_name,
             email=email,
