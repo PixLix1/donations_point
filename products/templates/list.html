@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+    <link href="{% static 'css/products.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+    <ul class="product-list">
+        {% for product in product_list %}
+            <li>
+                <img src="{{ product.image_url }}">
+                <div> {{ product.name }} </div>
+            </li>
+        {% endfor %}
+
+    </ul>
+{% endblock %}
