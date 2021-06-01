@@ -38,11 +38,17 @@ class AuthUser(AbstractUser):
     first_name = models.CharField(verbose_name=_('first name'), max_length=150, blank=True, null=False)
     last_name = models.CharField(verbose_name=_('last name'), max_length=150, blank=True, null=False)
     email = models.EmailField(verbose_name=_('email address'), blank=True, unique=True, null=False)
+    password = models.CharField(_('password'), max_length=128, null=True, default=None)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
     objects = AuthUserManager()
+
+    def profile_avatar(self):
+        return self.profile.avatar
+
+    profile_avatar.short_description = 'Profile Avatar'
 
     def __str__(self):
         return self.email

@@ -6,9 +6,14 @@ AuthUserModel = get_user_model()
 
 
 # Create your models here.
-class Products(CustomModel):
-    user_id = models.ForeignKey(AuthUserModel, on_delete=models.CASCADE, related_name='users')
-    category = models.CharField(max_length=255, null=False)
+class Category(CustomModel):
     name = models.CharField(max_length=255, null=False)
-    description = models.TextField()
+    image = models.ImageField(upload_to='categories')
+
+
+class Products(CustomModel):
+    user = models.ForeignKey(AuthUserModel, null=False, on_delete=models.CASCADE, related_name='users')
+    category = models.ForeignKey(Category, null=False, on_delete=models.CASCADE, related_name='categories')
+    name = models.CharField(max_length=255, null=False)
+    description = models.TextField(max_length=255)
     image_url = models.TextField()

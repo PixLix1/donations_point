@@ -26,3 +26,9 @@ if __name__ == '__main__':
 
 
 # nice to have: number of views and number of add to fav
+
+
+# QUESTIONS:
+# views - products: category_list - request.get queryset is empty;
+# Category.objects.all() returns <QuerySet [<Category: Category object (1)>, <Category: Category object (2)
+#   .. because of .objects query?

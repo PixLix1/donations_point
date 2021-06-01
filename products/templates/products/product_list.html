@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{ extends 'base.html' }
 {% load static %}
 
 {% block style %}
@@ -9,8 +9,8 @@
     <ul class="product-list">
         {% for product in product_list %}
             <li>
-                <img src="{{ product.image_url }}">
                 <div> {{ product.name }} </div>
+                <img src="{{ product.image_url }}">
             </li>
         {% endfor %}
 

@@ -2,6 +2,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.shortcuts import reverse
 from django.contrib.sites.models import Site
+from utils.constants import ACTIVATION_AVAILABILITY
 
 
 def send_register_email(user):
@@ -17,7 +18,27 @@ def send_register_email(user):
     mail = EmailMultiAlternatives(
         subject='Your account has been registered.',
         body=content,
-        from_email='pixlix61@gmail.com',
+        to=[user.email]
+    )
+    mail.content_subtype = 'html'
+    mail.send()
+
+
+def send_activation_email(activation):
+    user = activation.user
+    context = {
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'activation_url': 'http://%s%s' % (Site.objects.get_current().domain, reverse('users:activation:activate', args=activation.token,)),
+        'activation_value': ACTIVATION_AVAILABILITY['value'],
+        'activation_unit': ACTIVATION_AVAILABILITY['unit']
+    }
+    template = get_template('users/emails/activate.html')
+    content = template.render(context)
+
+    mail = EmailMultiAlternatives(
+        subject='Your account has been created.',
+        body=content,
         to=[user.email]
     )
     mail.content_subtype = 'html'
