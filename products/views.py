@@ -6,7 +6,7 @@ from products.models import Category, Products
 def category_list(request):
     # categories = set(Products.objects.values_list('name', flat=True))  # import single field, return text,
     # not tuple
-    print('request:', request.GET.get('name'))
+    # print('request:', request.GET.get('name'))
     search_by_name = request.GET.get('name')
 
     if search_by_name:

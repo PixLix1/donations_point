@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'fontawesome-free',
     'users.apps.UsersConfig',
+    'social_django',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -134,6 +135,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = 'users:account:login'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -149,3 +151,34 @@ DEFAULT_FROM_EMAIL = config('EMAIL_USER')
 SITE_ID = 2
 
 AUTH_USER_MODEL = 'users.AuthUser'
+
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+SOCIAL_AUTH_URL_NAMESPACE = 'users:account:social'
+SOCIAL_AUTH_LOGIN_URL = '/'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('GOOGLE_APP_ID')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('GOOGLE_APP_SECRET')
+SOCIAL_AUTH_FACEBOOK_KEY = config('FB_APP_ID')
+SOCIAL_AUTH_FACEBOOK_SECRET = config('FB_APP_SECRET')
+SOCIAL_AUTH_FACEBOOK_API_VERSION = '10.0'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'public_profile']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'email,first_name,last_name',
+}
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'users.social_auth_pipelines.create_user',
+    # 'users.social_auth_pipelines.get_profile_picture',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+)

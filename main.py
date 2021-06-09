@@ -30,5 +30,15 @@ if __name__ == '__main__':
 
 # QUESTIONS:
 # views - products: category_list - request.get queryset is empty;
+#       >> nu e empty. doar daca nu este parametru vine empty
 # Category.objects.all() returns <QuerySet [<Category: Category object (1)>, <Category: Category object (2)
 #   .. because of .objects query?
+# middleware return?
+#       >> se transfera actiunea la functia care este decorata cu middleware
+# de ce in db model activation, id incepe cu 105? de la faked models? e ok?
+# de unde stie clasa UserActivation care mosteneste class form de metoda self.user.set_password?
+#       in view initiez form UserActivation cu user luat din model Activation pe baza token
+#       set_pass e posibil pt ca lucrez cu record de user?
+
+# https://dj-rest-auth.readthedocs.io/en/latest/faq.html
+# password reset urls only work if declared in main app urls, not if in users app urls

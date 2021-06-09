@@ -18,13 +18,35 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from donations_point.views import homepage_view, contact_view
+from django.urls import reverse_lazy
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', homepage_view),
-    path('contact', contact_view),
+    path('contact/', contact_view),
     path('users/', include('users.urls')),
     path('products/', include('products.urls')),
+    path(
+        'reset_password/',
+        auth_views.PasswordResetView.as_view(success_url=reverse_lazy('users:account:password_reset_done')),
+        name='reset_password'
+    ),
+    path(
+        'reset_password_sent/',
+        auth_views.PasswordResetDoneView.as_view(),
+        name='password_reset_done'
+    ),
+    path(
+        'reset/<uidb64>/<token>/',
+        auth_views.PasswordResetConfirmView.as_view(success_url=reverse_lazy('users:account:password_reset_complete')),
+        name='password_reset_confirm'
+    ),
+    path(
+        'reset_password_complete/',
+        auth_views.PasswordResetCompleteView.as_view(),
+        name='password_reset_complete'
+    ),
 ]
 
 if settings.DEBUG:

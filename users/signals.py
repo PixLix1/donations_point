@@ -3,6 +3,7 @@ from django.dispatch import receiver
 from django.contrib.auth import get_user_model
 from users.models import Profile, Activation
 from users.emails import send_activation_email
+from django.conf import settings
 
 AuthUserModel = get_user_model()
 
@@ -23,15 +24,15 @@ def create_profile(instance, created, **kwargs):
 @receiver(pre_save, sender=AuthUserModel)
 def inactivate_user(instance, **kwargs):
     print('instance', instance)
-    if not instance.pk:
+    if not instance.pk and not instance.is_social_auth:
         instance.is_active = False
         instance.password = None
 
 
 @receiver(post_save, sender=AuthUserModel)
 def set_activation_email(instance, created, **kwargs):
-    if created:
-        print('instance', instance)
-        activation = Activation(instance.id)
+    if created and not instance.is_social_auth:
+        # print('instance', instance)
+        activation = Activation(user=instance)
         activation.save()
         send_activation_email(activation)

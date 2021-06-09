@@ -29,7 +29,8 @@ def send_activation_email(activation):
     context = {
         'first_name': user.first_name,
         'last_name': user.last_name,
-        'activation_url': 'http://%s%s' % (Site.objects.get_current().domain, reverse('users:activation:activate', args=activation.token,)),
+        'activation_url': 'http://%s%s' % (Site.objects.get_current().domain, reverse('users:activation:activate',
+                                                                                      args=(activation.token,))),
         'activation_value': ACTIVATION_AVAILABILITY['value'],
         'activation_unit': ACTIVATION_AVAILABILITY['unit']
     }

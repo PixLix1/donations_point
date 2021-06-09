@@ -13,6 +13,7 @@ def register_view(request):
 
         if form.is_valid():
             user = form.save()
+            # user.is_social_auth = False
             send_register_email(user)
             return redirect(reverse('users:account:login'))
 
