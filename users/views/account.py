@@ -13,10 +13,13 @@ def register_view(request):
 
         if form.is_valid():
             user = form.save()
-            # user.is_social_auth = False
-            send_register_email(user)
+            # send_register_email(user)
             return redirect(reverse('users:account:login'))
 
     return render(request, 'users/register.html', {
         'form': form
     })
+
+
+def profile_view(request):
+    return render(request, 'users/profile.html', {})

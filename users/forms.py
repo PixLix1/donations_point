@@ -10,8 +10,6 @@ class RegisterForm(forms.ModelForm):
     class Meta:
         model = AuthUser
         fields = ['first_name', 'last_name', 'email']
-        exclude = ['is_social_auth']
-
     # password = forms.CharField(
     #     label='Password',
     #     widget=forms.PasswordInput,
@@ -48,18 +46,12 @@ class RegisterForm(forms.ModelForm):
     #         raise forms.ValidationError('Password confirmation mismatch.')
     #
     #     return password_confirmation
-
-    # @property
-    # def is_social_auth(self):
-    #     return self.is_social_auth
-
     def save(self, commit=True, is_social_auth=False):
         email = self.cleaned_data['email']
         # password = self.cleaned_data['password']
 
         self.instance.username = email
         # self.instance.set_password(password)  # set pass in AuthUser model
-        # self.instance.username.is_social_auth = False
 
         return super().save(commit)  # commit method from parent class
 

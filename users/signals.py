@@ -23,16 +23,20 @@ def create_profile(instance, created, **kwargs):
 
 @receiver(pre_save, sender=AuthUserModel)
 def inactivate_user(instance, **kwargs):
-    print('instance', instance)
-    if not instance.pk and not instance.is_social_auth:
+    if (not instance.pk and
+            (not hasattr(instance, 'is_social_auth') or not instance.is_social_auth)):
         instance.is_active = False
         instance.password = None
 
 
 @receiver(post_save, sender=AuthUserModel)
 def set_activation_email(instance, created, **kwargs):
-    if created and not instance.is_social_auth:
-        # print('instance', instance)
+    # login with social acct should not receive activation email (password is saved in db)
+    # accounts through register do not have attribute is_social_auth
+    # create superuser instance has attribute is_social_auth=False
+    # exclude active accounts
+    if created and (
+            not hasattr(instance, 'is_social_auth') or not instance.is_social_auth) and not instance.is_active:
         activation = Activation(user=instance)
         activation.save()
         send_activation_email(activation)

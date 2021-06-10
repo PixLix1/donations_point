@@ -19,6 +19,9 @@
                             <img src="{% static 'images/tree-template-logo.png' %}" height="50" />
                         </a>
                     </div>
+                    {% if user.is_authenticated %}
+                        {% include 'favorites.html' %}
+                    {% endif %}
                     <ul class="menu">
                         <li><a href="/">Home</a></li>
                         <li><a href="{% url 'products:list' %}">Donations</a></li>
