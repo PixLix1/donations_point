@@ -12,10 +12,11 @@
     <ul class="product-list">
         {% for category in category_list %}
             <li>
-                <div> {{ category.name }} </div>
-                <img src="{{ category.image.url }}" width="300">
+                <a href="{% url 'products:details' category.id %}">
+                    <div> {{ category.name }} </div>
+                    <img src="{{ category.image.url }}" width="300">
+                </a>
             </li>
         {% endfor %}
-
     </ul>
 {% endblock %}

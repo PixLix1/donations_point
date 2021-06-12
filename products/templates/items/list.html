@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block style %}
+    <link href="{% static 'css/products.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+    {% include 'pagination.html' %}
+        <ul class="product-list">
+            {% for item in page_obj %}
+                <li>
+                    <img src="{{ item.image_url }}" height="180" width="100%" />
+                    <div class="name-and-price">
+                        <div>{{ item.name }}</div>
+                    </div>
+                    <div class="store-details">
+                        Donated by
+                        <a href="{{ item.id }}">{{ item.user.first_name }} {{ item.user.last_name }}</a>
+                    </div>
+                    <form class="add-to-favorites" method="post" action="{% url 'products:items:add_to_favorites' item.id %}">
+                        {% csrf_token %}
+                        <input type="submit" value="Request donation" />
+                        <input type="submit" value="Add to favorites" />
+                        <input type="hidden" name="page" value="{{ page_obj.number }}" />
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% include 'pagination.html' %}
+{% endblock %}
