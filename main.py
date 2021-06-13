@@ -47,3 +47,5 @@ if __name__ == '__main__':
 # de ce page_obj.paginator? ma asteptam la paginator.page_obj
 # de unde vine page_obj?
 #       >> tine de ListView
+
+# !!! in list view return to same page

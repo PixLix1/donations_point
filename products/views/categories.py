@@ -1,12 +1,9 @@
-from django.shortcuts import render, Http404
+from django.shortcuts import render, Http404, redirect, reverse
 from products.models import Category, Products
 
 
 # Create your views here.
 def category_list(request):
-    # categories = set(Products.objects.values_list('name', flat=True))  # import single field, return text,
-    # not tuple
-    # print('request:', request.GET.get('name'))
     search_by_name = request.GET.get('name')
 
     if search_by_name:
@@ -21,18 +18,19 @@ def category_list(request):
 # list of items linked to category id
 def category_details(request, category_id):
     try:
-        category = Category.objects.get(pk=category_id)
+        # category = Category.objects.get(pk=category_id)
+        products = Products.objects.filter(category=category_id)
     except Category.DoesNotExist:
         raise Http404('Category with ID %s does not exist.' % category_id)
 
-    return render(request, 'details.html', {
-        'category': category
+    return render(request, 'category_details.html', {
+        'product_list': products,
     })
 
 # def product_list(request, category_id):
 #     return HttpResponse('I received category id = %s' % category_id)
 #     # items = Products.objects.all()
 #     #
-#     # return render(request, 'items/details.html', {
+#     # return render(request, 'items/category_details.html', {
 #     #     'product_list': items
 #     # })

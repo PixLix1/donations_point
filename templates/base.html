@@ -19,11 +19,11 @@
                         </a>
                     </div>
                     {% if user.is_authenticated %}
-                        {% include 'favorites.html' %}
+                        {% include 'favorites_mini.html' %}
                     {% endif %}
                     <ul class="menu">
                         <li><a href="/">Home</a></li>
-                        <li><a href="{% url 'products:list' %}">Donations</a></li>
+                        <li><a href="{% url 'products:items:list' %}">Donations</a></li>
                         <li><a href="/contact">Contact</a></li>
                     </ul>
                     <div class="user-data">

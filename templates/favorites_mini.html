@@ -7,7 +7,7 @@
 
 {% favorites_data as favorites_data %}
 
-<a href="">
+<a href="{% url 'products:favorites:view' %}">
     <div class="favorites-container" title="{{ favorites_data.items }}">
         {% comment %}
         <div class="favorites-container" title="{{ request.session.favorites | items_or_names:'name' }}">

@@ -17,3 +17,9 @@ class Products(CustomModel):
     name = models.CharField(max_length=255, null=False)
     description = models.TextField(max_length=255)
     image_url = models.TextField()
+
+
+class Favorites(CustomModel):
+    user = models.OneToOneField(AuthUserModel, on_delete=models.CASCADE)
+    data = models.JSONField(null=True)
+

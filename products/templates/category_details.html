@@ -6,12 +6,13 @@
 {% endblock %}
 
 {% block content %}
-    <h2>{{ category.name }}</h2>
-        <ul class="product-list">
-        {% for product in category %}
+    <ul class="product-list">
+        {% for product in product_list %}
             <li>
-                <div> {{ product.name }} </div>
-                <img src="{{ product.image_url }}">
+                <a href="">
+                    <div> {{ product.name }} </div>
+                    <img src="{{ product.image_url }}">
+                </a>
             </li>
         {% endfor %}
     </ul>

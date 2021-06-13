@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <h2>{{ product.name }}</h2>
+    <h3>Donor: {{ product.user.first_name }} {{ product.user.last_name }}</h3>
+    <h4><a href="">Request donation</a></h4>
+    <h4><a href="{% url 'products:items:add_to_favorites' product.id %}?next={% url 'products:items:item' product.id %}">Add to favorites</a></h4>
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <img src="{{ product.image_url }}">
+                </td>
+                <td>
+                    <p>{{ product.description }}</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}

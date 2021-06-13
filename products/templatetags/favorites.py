@@ -25,15 +25,9 @@ def get_favorites_data(context):
 
 @register.filter(name='visible_pages')
 def visible_pages(page_obj):
-    # print('page_obj', page_obj)  # page_obj <Page 25 of 25>
     paginator = page_obj.paginator
     pages = list(paginator)
     current_page = page_obj.number
-    # print('paginator', paginator)  # <django.core.paginator.Paginator object at 0x000002D3D00FAE80>
-    # print('current_page', current_page)  # 25
-    # for page in paginator:
-    #     print('page', page)  # <Page 25 of 25>
-
     first_pages = pages[0:3]
     last_pages = pages[-3:]
     if current_page in range(1, 7):
@@ -41,8 +35,17 @@ def visible_pages(page_obj):
         last_pages = pages[-3:]
         return first_pages + [None] + last_pages
     elif current_page in range(paginator.num_pages - 7, paginator.num_pages + 1):
-        last_pages = pages[paginator.num_pages - 10:]
+        last_pages = pages[current_page - 3:]
+        # last_pages = pages[paginator.num_pages - 10:]
         return first_pages + [None] + last_pages
 
     current_page_index = [page.number for page in pages].index(current_page)
     return first_pages + [None] + pages[current_page_index - 2:current_page_index + 3] + [None] + last_pages
+
+
+# @register.simple_tag(name='favorites_status', takes_context=True)
+# def get_products_from_favorites(context):
+#     fav_dict = context.request.session.get('favorites', {})
+#     print(fav_dict)
+#     # if 'favorites' in fav_dict:
+#     #     return 'disabled' if item_id in fav_dict else None

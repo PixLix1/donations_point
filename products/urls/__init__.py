@@ -1,11 +1,10 @@
 from django.urls import path, include
 from products.views.categories import category_list, category_details
+from products.views.items import item_view
 
 app_name = 'products'
 
 urlpatterns = [
-    path('', category_list, name='list'),
-    path('<int:category_id>/', category_details, name='details'),
     path('items/', include('products.urls.items')),
-    # path('', item_view, name='item')
+    path('favorites/', include('products.urls.favorites')),
 ]

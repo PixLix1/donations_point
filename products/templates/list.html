@@ -14,7 +14,7 @@
             <li>
                 <a href="{% url 'products:details' category.id %}">
                     <div> {{ category.name }} </div>
-                    <img src="{{ category.image.url }}" width="300">
+                    <img src="{{ category.image.url }}" width="200" style="border-radius:100%">
                 </a>
             </li>
         {% endfor %}
