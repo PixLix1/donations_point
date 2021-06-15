@@ -1,0 +1,22 @@
+.flex-container {
+    display: flex;
+    height: 50%;
+}
+
+.flex-child {
+    flex: 1;
+    background-color: green;
+    width: 80%;
+    text-align: center;
+}
+
+.flex-child:first-child {
+    margin-right: 20px;
+    width: 80%;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+
+}

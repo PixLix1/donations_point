@@ -2,31 +2,49 @@ from django.shortcuts import redirect, reverse, render, Http404
 from django.views.generic import ListView
 from products.models import Products
 from utils.favorites import Favorites
+from django.core.paginator import Paginator
+from django.urls import resolve
 
 
-class ItemsList(ListView):
-    model = Products
-    context_object_name = 'items_list'
-    template_name = 'items/list.html'
-    paginate_by = 9
+# class ItemsList(ListView):
+#     model = Products
+#     context_object_name = 'items_list'
+#     template_name = 'items/list.html'
+#     paginate_by = 9
+
+def list_view(request):
+    if request.user.is_authenticated:
+        products = Products.objects.exclude(status=3).exclude(user_id=request.user.id)
+    else:
+        products = Products.objects.exclude(status=3)  # 3=inactive (see constants)
+
+    paginator = Paginator(products, 9)
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'items/list.html', {
+        'page_obj': page_obj,
+        'items_list': products,
+    })
 
 
-def add_to_favorites(request, item_id):
-    page = request.GET.get('page', 1)
-    next_url = request.GET.get('next')
+def add_to_favorites(request, item_id, page_num=None):
+    # next_url = request.GET.get('next')
     favorites = Favorites(request.user, request.session)
     favorites.add(item_id)
 
-    if next_url:
-        return redirect(next_url)
+    current_url = resolve(request.path_info).url_name
+
+    if current_url == 'add_to_favorites_item_view':
+        return redirect(reverse('products:items:item', args=(item_id,)))
 
     return redirect('%s?page=%s' % (
         reverse('products:items:list'),
-        page
+        page_num
     ))
 
 
-def item_view(request, item_id, page=None):
+def item_view(request, item_id):
     try:
         product = Products.objects.get(id=item_id)
     except Products.DoesNotExist:
@@ -34,5 +52,4 @@ def item_view(request, item_id, page=None):
 
     return render(request, 'items/item.html', {
         'product': product,
-        'page': page
     })

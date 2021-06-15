@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/requests_main.css' %}" />
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <div class="flex-container">
+        <a class="flex-child magenta"  href="">
+        <div >
+            View your donation requests to other users of the Donation Point community
+        </div>
+        </a>
+        <a class="flex-child green" href="{% url 'orders:view_orders' %}">
+        <div>
+            View your requests for donation from other users in the Donation Point community
+        </div>
+        </a>
+    </div>
+{% else %}
+    Log into your account to see your orders and product requests.
+{% endif %}
+
+{% endblock %}

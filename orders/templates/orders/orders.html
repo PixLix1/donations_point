@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    {% if orders %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Picture</th>
+                    <th>Product name</th>
+                    <th>Requestor name</th>
+                    <th>Process order</th>
+                </tr>
+            </thead>
+            <tbody>
+        {% for order in orders %}
+            <tr>
+                <td><img src="{{ order.item.image_url }}" height="180" width="100%"></td>
+                <td>{{ order.item.name }}</td>
+                <td><a href="">{{ order.user.first_name }} {{ order.user.last_name }}</a></td>
+                <td >
+                    <a href=""><i class="fas fa-thumbs-up"></i> Donate product</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <div>There are no requests yet for your products.</div>
+    {% endif %}
+{% endif %}
+
+{% endblock %}

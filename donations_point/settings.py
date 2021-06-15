@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'fontawesome-free',
     'users.apps.UsersConfig',
+    'orders.apps.OrdersConfig',
     'social_django',
     'django.contrib.admin',
     'django.contrib.auth',

@@ -27,6 +27,7 @@ urlpatterns = [
     path('contact/', contact_view),
     path('users/', include('users.urls')),
     path('products/', include('products.urls')),
+    path('orders/', include('orders.urls')),
     path(
         'reset_password/',
         auth_views.PasswordResetView.as_view(success_url=reverse_lazy('users:account:password_reset_done')),
