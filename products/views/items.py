@@ -4,7 +4,7 @@ from products.models import Products
 from utils.favorites import Favorites
 from django.core.paginator import Paginator
 from django.urls import resolve
-
+from products.forms.filter import SearchItems
 
 # class ItemsList(ListView):
 #     model = Products
@@ -12,19 +12,25 @@ from django.urls import resolve
 #     template_name = 'items/list.html'
 #     paginate_by = 9
 
+
 def list_view(request):
-    if request.user.is_authenticated:
-        products = Products.objects.exclude(status=3).exclude(user_id=request.user.id)
-    else:
-        products = Products.objects.exclude(status=3)  # 3=inactive (see constants)
+    form = SearchItems(request.GET)
+    products = form.get_filtered_items()
+    # if request.user.is_authenticated:
+    #     products = Products.objects.exclude(status=3).exclude(user_id=request.user.id)
+    # else:
+    #     products = Products.objects.exclude(status=3)  # 3=inactive (see constants)
 
     paginator = Paginator(products, 9)
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
+    # form = SearchItems(request.GET)
+    # (print('request.GET', request.GET))
 
     return render(request, 'items/list.html', {
         'page_obj': page_obj,
         'items_list': products,
+        'form': form
     })
 
 
@@ -34,14 +40,38 @@ def add_to_favorites(request, item_id, page_num=None):
     favorites.add(item_id)
 
     current_url = resolve(request.path_info).url_name
+    previous_url = request.META['HTTP_REFERER']
+    # print('request.GET', request.GET)
+    # print('request.path', request.path)
+    # print('request.meta', request.META['HTTP_REFERER'])
 
     if current_url == 'add_to_favorites_item_view':
         return redirect(reverse('products:items:item', args=(item_id,)))
 
+    if 'search_term' in previous_url:
+        return redirect(previous_url)
+
     return redirect('%s?page=%s' % (
         reverse('products:items:list'),
         page_num
+
     ))
+
+
+# def add_to_favorites(request, item_id, page_num=None):
+#     # next_url = request.GET.get('next')
+#     favorites = Favorites(request.user, request.session)
+#     favorites.add(item_id)
+#
+#     current_url = resolve(request.path_info).url_name
+#
+#     if current_url == 'add_to_favorites_item_view':
+#         return redirect(reverse('products:items:item', args=(item_id,)))
+#
+#     return redirect('%s?page=%s' % (
+#         reverse('products:items:list'),
+#         page_num
+#     ))
 
 
 def item_view(request, item_id):
@@ -52,4 +82,19 @@ def item_view(request, item_id):
 
     return render(request, 'items/item.html', {
         'product': product,
+    })
+
+
+def products_by_owner(request, user_id):
+    items = Products.objects.filter(user_id=user_id).exclude(status=3)
+    product = items[0]
+    print('product user first', product.user.first_name)
+    first_name = product.user.first_name
+    last_name = product.user.last_name
+    # print('user slice', user)
+    # owner_first_name = user.first_name
+    return render(request, 'items/products_by_owner.html', {
+        'items': items,
+        'first_name': first_name,
+        'last_name': last_name,
     })

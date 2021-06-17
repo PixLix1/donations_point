@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from orders.models import Order
 from django.contrib.auth.decorators import login_required
 from products.models import Products
+from orders.emails import send_donation_approval_email, send_donation_rejection_email
 
 AuthUserModel = get_user_model()
 
@@ -36,33 +37,57 @@ def request_product(request, item_id):
     return redirect(reverse('products:items:list'))
 
 
-def get_orders(request):
+def requests_orders(request):
     return render(request, 'orders/requests.html')
+
+
+@login_required
+def user_view_requests(request):
+    requests = Order.objects.filter(user_id=request.user.id).filter(status=1)
+    return render(request, 'orders/donation_requests.html', {
+        'requests': requests
+    })
 
 
 @login_required
 def owner_view_orders(request):
     try:
-        products = Products.objects.filter(user=request.user.id)
+        products = Products.objects.filter(user=request.user.id).exclude(status=3)
         product_ids = [product.id for product in products]
-        orders = Order.objects.filter(item_id__in=list(product_ids))
-
-        requests = Order.objects.filter(user_id=request.user.id)
+        orders = Order.objects.filter(item_id__in=list(product_ids)).filter(status=1)
 
         return render(request, 'orders/orders.html', {
             'orders': orders,
-            'requests': requests,
         })
 
     except Products.DoesNotExist:
         raise Http404('Products for user %s are not available' % request.user.id)
 
-    # if products:
-    #     product_ids = [product.id for product in products]
-    #     orders = Order.objects.filter(item_id__in=list(product_ids))
 
-        # return render(request, 'orders/orders.html', {
-        #     'orders': orders
-        # })
+@login_required
+def process_order(request, order_id):
+    try:
+        # process approved order
+        order = Order.objects.get(id=order_id)
+        send_donation_approval_email(order.user, order.item.name)
+        order.status = 2  # approved
+        order.save()
 
-    # return render(request, 'orders/orders.html')
+        # process data for other orders for same product
+        orders_rejected = Order.objects.filter(item_id=order.item).exclude(id=order_id)
+        users_orders_rejected = [order.user for order in orders_rejected]
+        if users_orders_rejected:
+            send_donation_rejection_email(users_orders_rejected, order.item.name)
+        for order in orders_rejected:
+            order.status = 3  # rejected
+            order.save()
+
+        # process ordered product
+        order.item.status = 3  # inactive
+        order.item.save()
+
+    except Order.DoesNotExist:
+        raise Http404('Order id %s does not exist' % order_id)
+
+    return redirect(reverse('orders:view_orders'))
+    pass

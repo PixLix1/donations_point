@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load favorites %}
+{% load items %}
 
 {% block style %}
     <link href="{% static 'css/products.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block content %}
+    {% include 'items/filters.html' %}
     {% include 'pagination.html' %}
         <ul class="product-list">
             {% for item in page_obj %}
@@ -21,15 +23,14 @@
                         Category
                         <a href="{% url 'products:items:category' item.category.id %}">{{item.category.name}}</a><br>
                         Donated by
-                        <a href="{{ item.user.id }}">{{ item.user.first_name }} {{ item.user.last_name }}</a><br>
+                        <a href="{% url 'products:items:products_by_owner' item.user.id %}">{{ item.user.first_name }} {{ item.user.last_name }}</a><br>
                         <a href="{% url 'orders:request_donation' item.id %}">Request donation</a><br>
                         <a href="{% url 'products:items:add_to_favorites' item.id page_obj.number %}">Add to favorites</a>
                         {% if item.status == 1 %}
-                            <p>No requests yet for this product </p>
+                            <p>No requests for this product yet</p>
                         {% else %}
                             <p>Product requested by other users</p>
                         {% endif %}
-
                     </div>
                 </li>
             {% endfor %}

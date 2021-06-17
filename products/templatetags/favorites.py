@@ -31,9 +31,11 @@ def visible_pages(page_obj):
     first_pages = pages[0:3]
     last_pages = pages[-3:]
     if current_page in range(1, 7):
-        first_pages = pages[0:current_page + 2]
-        last_pages = pages[-3:]
-        return first_pages + [None] + last_pages
+        if len(pages) > 7:
+            first_pages = pages[0:current_page + 2]
+            last_pages = pages[-3:]
+            return first_pages + [None] + last_pages
+        return pages
     elif current_page in range(paginator.num_pages - 7, paginator.num_pages + 1):
         last_pages = pages[current_page - 3:]
         # last_pages = pages[paginator.num_pages - 10:]
@@ -43,9 +45,3 @@ def visible_pages(page_obj):
     return first_pages + [None] + pages[current_page_index - 2:current_page_index + 3] + [None] + last_pages
 
 
-# @register.simple_tag(name='favorites_status', takes_context=True)
-# def get_products_from_favorites(context):
-#     fav_dict = context.request.session.get('favorites', {})
-#     print(fav_dict)
-#     # if 'favorites' in fav_dict:
-#     #     return 'disabled' if item_id in fav_dict else None

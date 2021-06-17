@@ -1,0 +1,19 @@
+<div class="filters-wrapper">
+    <form class="filters" method="get" action="{% url 'products:items:list' %}">
+        <div class="top-filters">
+        {% for field in form %}
+        {% if field.id_for_label %}
+            {% if field.id_for_label == 'id_search_term' %}
+            <div class="flex-valign search-by-field">
+            {% else %}
+            <div class="flex-valign">
+            {% endif %}
+                <label>{{ field.label }}</label>
+                {{ field }}
+            </div>
+        {% else %}
+        </div>
+        {% endif %}
+        {% endfor %}
+    </form>
+</div>
