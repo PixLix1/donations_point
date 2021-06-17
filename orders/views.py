@@ -22,12 +22,15 @@ def request_product(request, item_id):
         if product.user != request.user and item_id not in requested_prod_ids and product.status != 3:
             order = Order(
                 user=request.user,
-                item=Products.objects.get(id=item_id)
+                item=Products.objects.get(id=item_id),
+                owner=product.user
             )
             order.save()
             if product.status != 2:
                 product.status = 2
                 product.save()
+            # owner = order.product_owner(order)
+            # print('owner', owner)
 
     except Products.DoesNotExist:
         raise Http404('Products with id %s is not available' % item_id)

@@ -10,6 +10,7 @@ AuthUserModel = get_user_model()
 # Create your models here.
 class Order(CustomModel):
     user = models.ForeignKey(AuthUserModel, on_delete=models.CASCADE)
+    owner = models.ForeignKey(AuthUserModel, on_delete=models.CASCADE, related_name='owner')
     item = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='order')
 
     class Status(models.TextChoices):
@@ -26,11 +27,16 @@ class Order(CustomModel):
     )
 
     # used in admin view
-    def __str__(self):
-        return 'order id: %s_product: %s' % (self.pk, self.item.name)
+    # def __str__(self):
+    #     return 'order id: %s_product: %s' % (self.pk, self.item.name)
+    #
+    # def __repr__(self):
+    #     return 'order id: %s_product: %s' % (self.pk, self.item.name)
 
-    def __repr__(self):
-        return 'order id: %s_product: %s' % (self.pk, self.item.name)
+    # @staticmethod
+    # def product_owner(order_obj):
+    #     item_owner = order_obj.item.user
+    #     return item_owner
 
 # class ProductOrders(CustomModel):
 #     user = models.ForeignKey(AuthUserModel, on_delete=models.CASCADE)
