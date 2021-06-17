@@ -10,7 +10,7 @@ AuthUserModel = get_user_model()
 
 # Create your views here.
 @login_required
-def request_product(request, item_id):
+def request_product(request, item_id, page_num=None):
     try:
         product = Products.objects.get(id=item_id)
         submitted_orders = Order.objects.filter(user_id=request.user.id)
@@ -19,25 +19,30 @@ def request_product(request, item_id):
         # owner should not request their products
         # avoid multiple requests for same product
         # avoid requests on inactive products
-        if product.user != request.user and item_id not in requested_prod_ids and product.status != 3:
+        if product.user != request.user and item_id not in requested_prod_ids and product.status < 3:
             order = Order(
                 user=request.user,
                 item=Products.objects.get(id=item_id),
                 owner=product.user
             )
             order.save()
-            if product.status != 2:
+            if product.status == 1:
                 product.status = 2
-                product.save()
-            # owner = order.product_owner(order)
-            # print('owner', owner)
+            product.save()
 
     except Products.DoesNotExist:
         raise Http404('Products with id %s is not available' % item_id)
-    except Order.DoesNotExist:
-        pass
+    # current_url = resolve(request.path_info).url_name
+    # if current_url == 'item_view_request_donation':
+    #     return redirect(reverse('products:items:item', args=(item_id,)))
+    if not page_num:
+        previous_url = request.META['HTTP_REFERER']
+        return redirect(previous_url)
 
-    return redirect(reverse('products:items:list'))
+    return redirect('%s?page=%s' % (
+        reverse('products:items:list'),
+        page_num
+    ))
 
 
 def requests_orders(request):
@@ -46,7 +51,7 @@ def requests_orders(request):
 
 @login_required
 def user_view_requests(request):
-    requests = Order.objects.filter(user_id=request.user.id).filter(status=1)
+    requests = Order.objects.filter(user_id=request.user.id).filter(status=1)  # only active orders
     return render(request, 'orders/donation_requests.html', {
         'requests': requests
     })
@@ -93,4 +98,12 @@ def process_order(request, order_id):
         raise Http404('Order id %s does not exist' % order_id)
 
     return redirect(reverse('orders:view_orders'))
+    pass
+
+
+@login_required
+def cancel_donation_request(request, item_id):
+    # get order for user based on prod
+    # set order status to cancelled
+    # check product status - if no other requests, then set it on active
     pass

@@ -18,18 +18,15 @@
         </thead>
         <tbody>
         {% for item in items_list %}
-         <form class="" method="post" action="{% url 'products:favorites:view' %}">
-             {% csrf_token %}
-            <tr>
+             <tr>
                 <td><img src="{{ item.image_url }}" height="180" width="100%"></td>
                 <td>{{ item.name }}</td>
                 <td>{{ item.user.first_name }} {{ item.user.last_name }}</td>
                 <td >
-                    <input type="submit" name="request_{{ item.id }}" value="Request donation" />
-                    <input type="submit" name="remove_{{ item.id }}" value="Remove from favorites" />
+                    <a href="{% url 'orders:item_view_request_donation' item.id %}">Request donation</a><br>
+                    <a href="{% url 'products:favorites:remove_favorite' item.id %}">Remove from favorites</a>
                 </td>
             </tr>
-         </form>
         {% endfor %}
         </tbody>
     </table>

@@ -25,12 +25,11 @@ class SearchItems(forms.Form):
         super().__init__(*args, **kwargs)
 
     def get_filtered_items(self):
-        #     # with is_valid Django creates the `cleaned_data` dictionary with all the cleaned informations.
+        #     # with is_valid Django creates the `cleaned_data` dictionary with all the cleaned information.
         if self.is_valid():
             search_term = self.cleaned_data.get('search_term', None)
-            # items_list = Products.objects.order_by('created_at')
             # if search_term:
             items_list = Products.objects.filter(name__icontains=search_term)
-            items_list = items_list.filter(name__icontains=search_term)
+            items_list = items_list.filter(name__icontains=search_term).order_by('created_at')
             return items_list
         return Products.objects.all()

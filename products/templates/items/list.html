@@ -24,8 +24,8 @@
                         <a href="{% url 'products:items:category' item.category.id %}">{{item.category.name}}</a><br>
                         Donated by
                         <a href="{% url 'products:items:products_by_owner' item.user.id %}">{{ item.user.first_name }} {{ item.user.last_name }}</a><br>
-                        <a href="{% url 'orders:request_donation' item.id %}">Request donation</a><br>
-                        <a href="{% url 'products:items:add_to_favorites' item.id page_obj.number %}">Add to favorites</a>
+                        <a href="{% url 'orders:request_donation' item.id page_obj.number %}">Request donation</a><br>
+                        <a href="{% url 'products:favorites:add_to_favorites' item.id page_obj.number %}">Add to favorites</a>
                         {% if item.status == 1 %}
                             <p>No requests for this product yet</p>
                         {% else %}

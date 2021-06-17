@@ -6,7 +6,7 @@
     <h2>{{ product.name }}</h2>
     <h3>Donor: {{ product.user.first_name }} {{ product.user.last_name }}</h3>
     <h4><a href="">Request donation</a></h4>
-    <h4><a href="{% url 'products:items:add_to_favorites_item_view' product.id %}">Add to favorites</a></h4>
+    <h4><a href="{% url 'products:favorites:add_to_favorites_item_view' product.id %}">Add to favorites</a></h4>
     <div>
         <table>
             <tr>

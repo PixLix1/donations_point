@@ -7,6 +7,7 @@ urlpatterns = [
     path('', requests_orders, name='requests_orders'),
     path('your_requests/', user_view_requests, name='donation_requests'),
     path('your_orders/', owner_view_orders, name='view_orders'),
-    path('<int:item_id>/request/', request_product, name='request_donation'),
+    path('<int:item_id>/request/', request_product, name='item_view_request_donation'),
+    path('<int:item_id>/request/<int:page_num>/', request_product, name='request_donation'),
     path('<int:order_id>/order/', process_order, name='process_order'),
 ]
