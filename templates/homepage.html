@@ -17,7 +17,7 @@
     {% if user.is_authenticated %}
         <h3>Hey, {{ user.first_name }} {{ user.last_name }}!</h3>
     {% else %}
-        <p>Hey stranger, log in or create an account to be able to submit donation requests or to upload your products that you want to donate.</p>
+        <p>Hey stranger, log in or create an account to be able to submit donation requests or to post products you want to donate.</p>
     {% endif %}
 <p>We currently have a total of <a href="{% url 'products:items:list' %}">{{ active_items }}</a> products you can choose from.</p>
 {% endblock%}

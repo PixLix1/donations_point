@@ -86,6 +86,8 @@ def process_order(request, order_id, acceptance):
 
         # process data for other orders for same product
             users_other_orders = [order.user for order in other_orders]
+            for user in users_other_orders:
+                print('user', user)
             if users_other_orders:
                 send_product_donated_bulk_email(users_other_orders, order.item.name)
             for order in other_orders:

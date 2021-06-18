@@ -39,7 +39,7 @@ def item_view(request, item_id):
 
 
 def products_by_owner(request, user_id):
-    items = Products.objects.filter(user_id=user_id).exclude(status=3)
+    items = Products.objects.filter(user_id=user_id).exclude(status=3).order_by('id')
     product = items[0]
     first_name = product.user.first_name
     last_name = product.user.last_name

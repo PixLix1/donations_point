@@ -20,7 +20,7 @@ def category_list(request):
 def category_details(request, category_id):
     try:
         # category = Category.objects.get(pk=category_id)
-        products = Products.objects.filter(category=category_id)
+        products = Products.objects.filter(category=category_id).order_by('id')
         paginator = Paginator(products, 9)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
