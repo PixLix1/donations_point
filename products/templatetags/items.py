@@ -30,3 +30,14 @@ def number_of_requests(item_id):
     return 'There are %s active requests for this product' % nr_requests
 
 
+@register.simple_tag(name='check_user_requests', takes_context=True)
+def check_user_requests(item_id, user_id):
+    try:
+        order = Order.objects.filter(item_id=item_id).filter(user_id=1)
+
+    except Order.DoesNotExist:
+        pass
+    except IndexError:
+        pass
+
+

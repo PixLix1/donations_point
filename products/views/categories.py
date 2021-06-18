@@ -1,5 +1,6 @@
 from django.shortcuts import render, Http404, redirect, reverse
 from products.models import Category, Products
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -20,11 +21,15 @@ def category_details(request, category_id):
     try:
         # category = Category.objects.get(pk=category_id)
         products = Products.objects.filter(category=category_id)
+        paginator = Paginator(products, 9)
+        page_number = request.GET.get('page', 1)
+        page_obj = paginator.get_page(page_number)
     except Category.DoesNotExist:
         raise Http404('Category with ID %s does not exist.' % category_id)
 
     return render(request, 'category_details.html', {
         'product_list': products,
+        'page_obj': page_obj,
     })
 
 # def product_list(request, category_id):

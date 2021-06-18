@@ -1,19 +1,22 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load items %}
 
 {% block style %}
     <link href="{% static 'css/products.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block content %}
+{% include 'pagination.html' %}
     <ul class="product-list">
-        {% for product in product_list %}
+        {% for product in page_obj %}
             <li>
                 <a href="{% url 'products:items:item' product.id %}">
                     <div> {{ product.name }} </div>
-                    <img src="{{ product.image_url }}">
+                    <img src="{{ product.image_url }}" height="240" width="100%" />
                 </a>
             </li>
         {% endfor %}
     </ul>
+{% include 'pagination.html' %}
 {% endblock %}

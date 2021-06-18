@@ -32,7 +32,7 @@ def add_to_favorites(request, item_id, page_num=None):
     if current_url == 'add_to_favorites_item_view':
         return redirect(reverse('products:items:item', args=(item_id,)))
 
-    if 'search_term' in previous_url:
+    if 'search_term' in previous_url or 'products_by_owner' in previous_url:
         return redirect(previous_url)
 
     return redirect('%s?page=%s' % (

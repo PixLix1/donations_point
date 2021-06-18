@@ -1,18 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load favorites %}
+{% load items %}
 
 {% block style %}
     <link href="{% static 'css/products.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block content %}
-<h2><a href="">{{ first_name }} {{ last_name }}</a></h2>
+{% include 'pagination.html' %}
+<h2>{{ first_name }} {{ last_name }}</h2>
     <ul class="product-list">
-        {% for item in items %}
+        {% for item in page_obj %}
             <li>
                 <a href="{% url 'products:items:item' item.id %}">
-                    <img src="{{ item.image_url }}" height="180" width="100%" />
+                    <img src="{{ item.image_url }}" height="240" width="100%" />
                     <div class="name-and-price">
                         <div>{{ item.name }}</div>
                     </div>
@@ -21,14 +23,17 @@
                     Category
                     <a href="{% url 'products:items:category' item.category.id %}">{{item.category.name}}</a><br>
                     <a href="{% url 'orders:item_view_request_donation' item.id %}">Request donation</a><br>
-                    <a href="{% url 'products:favorites:add_to_favorites_item_view' item.id %}">Add to favorites</a>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'products:favorites:add_to_favorites' item.id page_obj.number %}">Add to favorites</a>
+                    {% endif %}
                     {% if item.status == 1 %}
-                        <p>No requests yet for this product </p>
+                        <p>No requests yet</p>
                     {% else %}
-                        <p>Product requested by other users</p>
+                        <p>{% number_of_requests item.id %}</p>
                     {% endif %}
                 </div>
             </li>
         {% endfor %}
     </ul>
+{% include 'pagination.html' %}
 {% endblock %}
