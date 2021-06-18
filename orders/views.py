@@ -32,11 +32,9 @@ def request_product(request, item_id, page_num=None):
 
     except Products.DoesNotExist:
         raise Http404('Products with id %s is not available' % item_id)
-    # current_url = resolve(request.path_info).url_name
-    # if current_url == 'item_view_request_donation':
-    #     return redirect(reverse('products:items:item', args=(item_id,)))
-    if not page_num:
-        previous_url = request.META['HTTP_REFERER']
+
+    previous_url = request.META['HTTP_REFERER']
+    if not page_num or 'search_term' in previous_url:
         return redirect(previous_url)
 
     return redirect('%s?page=%s' % (

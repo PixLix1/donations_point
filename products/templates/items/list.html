@@ -27,9 +27,9 @@
                         <a href="{% url 'orders:request_donation' item.id page_obj.number %}">Request donation</a><br>
                         <a href="{% url 'products:favorites:add_to_favorites' item.id page_obj.number %}">Add to favorites</a>
                         {% if item.status == 1 %}
-                            <p>No requests for this product yet</p>
+                            <p>No requests yet</p>
                         {% else %}
-                            <p>Product requested by other users</p>
+                            <p>{% number_of_requests item.id %}</p>
                         {% endif %}
                     </div>
                 </li>

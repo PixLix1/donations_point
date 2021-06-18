@@ -1,5 +1,5 @@
 from django import template
-from products.models import Products
+from orders.models import Order
 
 register = template.Library()
 
@@ -22,11 +22,11 @@ def get_pagination_url(request, page_number=1):
     return '?page=%s' % page_number
 
 
-@register.simple_tag(name='item_status', takes_context=True)
-def item_status(request, item_id):
-    user = request.user
-    item = Products.objects.get(pk=item_id)
-    # print('user_view', user)
-    if item.status == 1:
-        return 'Active'
-    return 'Requests'
+@register.simple_tag(name='number_of_requests')
+def number_of_requests(item_id):
+    nr_requests = Order.objects.filter(item_id=item_id).filter(status=1).count()
+    if nr_requests == 1:
+        return 'There is 1 active request for this product'
+    return 'There are %s active requests for this product' % nr_requests
+
+

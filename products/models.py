@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from donations_point.models import CustomModel
 from utils.constants import ACTIVE_STATUS, INACTIVE_STATUS, REQUESTED_STATUS
+from django.db.models import Count
 
 AuthUserModel = get_user_model()
 
