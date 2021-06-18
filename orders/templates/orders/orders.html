@@ -19,7 +19,8 @@
                 <td>{{ order.item.name }}</td>
                 <td><a href="">{{ order.user.first_name }} {{ order.user.last_name }}</a></td>
                 <td >
-                    <a href="{% url 'orders:process_order' order.id %}"><i class="fas fa-thumbs-up"></i> Donate product</a>
+                    <a href="{% url 'orders:process_order' order.id 1 %}"><i class="fas fa-thumbs-up"></i> Donate product</a>
+                    <a href="{% url 'orders:process_order' order.id 0 %}"><i class="fas fa-thumbs-down"></i> Refuse donation</a>
                 </td>
             </tr>
         {% endfor %}

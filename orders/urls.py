@@ -10,6 +10,6 @@ urlpatterns = [
     path('your_orders/', owner_view_orders, name='view_orders'),
     path('<int:item_id>/request/', request_product, name='item_view_request_donation'),
     path('<int:item_id>/request/<int:page_num>/', request_product, name='request_donation'),
-    path('<int:order_id>/order/', process_order, name='process_order'),
+    path('<int:order_id>/order/<int:acceptance>/', process_order, name='process_order'),
     path('<int:order_id>/cancel_request/', cancel_donation_request, name='cancel_request'),
 ]

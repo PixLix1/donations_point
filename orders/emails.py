@@ -24,12 +24,31 @@ def send_donation_approval_email(user, product_name):
     mail.send()
 
 
-def send_donation_rejection_email(user_list, product_name):
+def send_donation_rejection_email(user, product_name):
+    context = {
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'product_name': product_name,
+        'products_url': 'http://%s%s' % (Site.objects.get_current().domain, reverse('products:items:list')),
+    }
+    template = get_template('orders/emails/donation_declined.html')
+    content = template.render(context)
+
+    mail = EmailMultiAlternatives(
+        subject='Your donation request was declined.',
+        body=content,
+        to=[user.email]
+    )
+    mail.content_subtype = 'html'
+    mail.send()
+
+
+def send_product_donated_bulk_email(user_list, product_name):
     context = {
         'product_name': product_name,
         'products_url': 'http://%s%s' % (Site.objects.get_current().domain, reverse('products:items:list')),
     }
-    template = get_template('orders/emails/donation_rejected.html')
+    template = get_template('orders/emails/product_not_available.html')
     content = template.render(context)
 
     mail = EmailMultiAlternatives(
