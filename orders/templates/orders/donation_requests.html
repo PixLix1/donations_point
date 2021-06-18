@@ -9,6 +9,7 @@
                     <th>Picture</th>
                     <th>Product name</th>
                     <th>Donor name</th>
+                    <th>Cancel order</th>
                 </tr>
             </thead>
             <tbody>
@@ -17,6 +18,7 @@
                 <td><img src="{{ request.item.image_url }}" height="180" width="100%"></td>
                 <td>{{ request.item.name }}</td>
                 <td><a href="{% url 'products:items:products_by_owner' request.item.user.id %}">{{ request.item.user.first_name }} {{ request.item.user.last_name }}</a></td>
+                <td><a href="{% url 'orders:cancel_request' request.id %}"><i class="fas fa-window-close"></i></a></td>
             </tr>
         {% endfor %}
         </tbody>
@@ -25,5 +27,4 @@
         <div>You have not made any requests yet.</div>
     {% endif %}
 {% endif %}
-
 {% endblock %}

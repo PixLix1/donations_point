@@ -19,7 +19,7 @@ class Order(CustomModel):
         REJECTED = '3', _('Rejected')
         SHIPMENT = '4', _('Shipment')
         CLOSED = '5', _('Closed')
-        # CANCELLED = '6', _('Cancelled')
+        CANCELLED = '6', _('Cancelled')
 
     status = models.CharField(
         max_length=2,

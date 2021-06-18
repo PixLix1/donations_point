@@ -23,7 +23,7 @@ def list_view(request):
     return render(request, 'items/list.html', {
         'page_obj': page_obj,
         'items_list': products,
-        # 'form': form
+        'form': form
     })
 
 

@@ -73,8 +73,12 @@ def owner_view_orders(request):
 
 
 @login_required
-def process_order(request, order_id):
+def process_order(request, order_id, acceptance=None):
     try:
+        # get data
+
+
+
         # process approved order
         order = Order.objects.get(id=order_id)
         send_donation_approval_email(order.user, order.item.name)
@@ -98,12 +102,33 @@ def process_order(request, order_id):
         raise Http404('Order id %s does not exist' % order_id)
 
     return redirect(reverse('orders:view_orders'))
-    pass
+    # pass
 
 
 @login_required
-def cancel_donation_request(request, item_id):
-    # get order for user based on prod
-    # set order status to cancelled
-    # check product status - if no other requests, then set it on active
-    pass
+def cancel_donation_request(request, order_id):
+    try:
+        # get data: order, other active orders same prod and prod
+        order = Order.objects.get(id=order_id)
+        other_orders = Order.objects.filter(item=order.item.id).filter(status=1).exclude(id=order_id)
+        product = Products.objects.get(id=order.item.id)
+
+        # process order - set status to cancelled
+        # order excluded from requestor's view by status code (only active orders)
+        order.status = 6
+        order.save()
+
+        # process products - change status to active if no other orders
+        print('other orders len', len(other_orders))
+        if not other_orders:
+            product.status = 1
+            product.save()
+
+    except Order.DoesNotExist:
+        raise Http404('Order %s does not exist' % order_id)
+    except Products.DoesNotExist:
+        raise Http404('Product id does not exist')
+    except IndexError:
+        pass
+
+    return redirect(reverse('orders:donation_requests'))

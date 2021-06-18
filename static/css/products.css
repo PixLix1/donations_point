@@ -50,7 +50,7 @@ form.add-to-cart input[type="number"] {
     padding: 4px;
     border-radius: 2px;
     border: 1px solid black;
-    width: 60%;
+    width: 20%;
 }
 .filters-wrapper select {
     margin-left: 10px;

@@ -1,5 +1,6 @@
 from django.urls import path
-from orders.views import request_product, requests_orders, owner_view_orders, process_order, user_view_requests
+from orders.views import request_product, requests_orders, owner_view_orders, process_order, user_view_requests, \
+    cancel_donation_request
 
 app_name = 'orders'
 
@@ -10,4 +11,5 @@ urlpatterns = [
     path('<int:item_id>/request/', request_product, name='item_view_request_donation'),
     path('<int:item_id>/request/<int:page_num>/', request_product, name='request_donation'),
     path('<int:order_id>/order/', process_order, name='process_order'),
+    path('<int:order_id>/cancel_request/', cancel_donation_request, name='cancel_request'),
 ]
