@@ -3,8 +3,8 @@
 <html>
     <head>
         <title>Donations Point</title>
-        <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
-        <link href="{% static 'fontawesome_free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+            <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
+            <link href="{% static 'fontawesome_free/css/all.min.css' %}" rel="stylesheet" type="text/css">
         {% block style %}
         {% endblock %}
         <script src="{% static 'fontawesome_free/js/all.min.js' %}"></script>
@@ -18,34 +18,22 @@
                             <img src="{% static 'images/tree-template-logo.png' %}" height="50" />
                         </a>
                     </div>
-                    {% comment %}
-                        {% if user.is_authenticated %}
-                            {% include 'mini_cart.html' %}
-                        {% endif %}
-                    {% endcomment %}
+                    {% if user.is_authenticated %}
+                        {% include 'favorites_mini.html' %}
+                    {% endif %}
                     <ul class="menu">
                         <li><a href="/">Home</a></li>
-                        {% comment %}
-                            <li><a href="{% url 'stores:list' %}">Stores</a></li>
-                            <li><a href="{% url 'stores:pizza:list' %}">Pizza</a></li>
-                        {% endcomment %}
+                        <li><a href="{% url 'products:items:list' %}">Donations</a></li>
+                        <li><a href="{% url 'orders:requests_orders' %}">Requests</a></li>
                         <li><a href="/contact">Contact</a></li>
                     </ul>
                     <div class="user-data">
                         {% if user.is_authenticated %}
-                            <a href="">Logout</a>
+                            {% include 'auth_user_menu.html' %}
                         {% else %}
-                                <a href="users/login">Login</a>
-                                <a id="register-link" href="">Register</a>
-                            {% endif %}
-                        {% comment %}
-                            {% if user.is_authenticated %}
-                                {% include 'auth_user_menu.html' %}
-                            {% else %}
-                                <a href="{% url 'users:account:login' %}">Login</a>
-                                <a id="register-link" href="{% url 'users:account:register' %}">Register</a>
-                            {% endif %}
-                        {% endcomment %}
+                            <a href="{% url 'users:account:login' %}">Login</a>
+                            <a id="register-link" href="{% url 'users:account:register' %}">Register</a>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="header-image" style="background-image: url('{% static 'images/appBanner.jpg' %}')">

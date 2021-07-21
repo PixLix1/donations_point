@@ -1,0 +1,25 @@
+{% load static %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/auth_user_menu.css' %}" />
+{% endblock %}
+
+<div class="auth-user-menu-container">
+    <div id="auth-menu-trigger" class="auth-data">
+        <i class="fas fa-angle-down arrow"></i>
+    </div>
+    <div class="auth-menu hide">
+           <ul class="product-list">
+        {% for category in category_list %}
+            <li>
+                <a href="{% url 'products:details' category.id %}">
+                    <div> {{ category.name }} </div>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    </div>
+</div>
+
+{% block script %}
+    <script src="{% static 'js/auth_user_menu.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% load static %}
+{% load favorites %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/favorites.css' %}" />
+{% endblock %}
+
+{% favorites_data as favorites_data %}
+
+<a href="{% url 'products:favorites:view' %}">
+    <div class="favorites-container" title="{{ favorites_data.items }}">
+        {% comment %}
+        <div class="favorites-container" title="{{ request.session.favorites | items_or_names:'name' }}">
+            <div class="number">{{ request.session.favorites | items_or_names:'items' }}</div>
+        {% endcomment %}
+        <div class="number">{{ favorites_data.number }}</div>
+        <div class="icon-container">
+            <i class="fas fa-heart"></i>
+        </div>
+    </div>
+</a>

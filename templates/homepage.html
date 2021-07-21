@@ -6,9 +6,6 @@
 {% endblock%}
 
 {% block content %}
-    {% comment %}
-    <img src="{% static 'images/tree-template-logo.png' %}" width="50" />
-    {% endcomment %}
     <h1>{{ brand }}</h1>
     <h2>
         {% if motto %}
@@ -19,11 +16,8 @@
     </h2>
     {% if user.is_authenticated %}
         <h3>Hey, {{ user.first_name }} {{ user.last_name }}!</h3>
+    {% else %}
+        <p>Hey stranger, log in or create an account to be able to submit donation requests or to post products you want to donate.</p>
     {% endif %}
-    <p>We have a total of {{ pizza_list | length }} you can choose from.</p>
-    <ul>
-        {% for pizza in pizza_list %}
-            <li>{{ pizza.name }} {{ pizza.price }}</li>
-        {% endfor %}
-    </ul>
+<p>We currently have a total of <a href="{% url 'products:items:list' %}">{{ active_items }}</a> products you can choose from.</p>
 {% endblock%}

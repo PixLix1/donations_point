@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+{% if items_list %}
+   <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Picture</th>
+                <th>Product name</th>
+                <th>Donor</th>
+                <th>Your next move</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in items_list %}
+             <tr>
+                <td><img src="{{ item.image_url }}" height="180" width="100%"></td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.user.first_name }} {{ item.user.last_name }}</td>
+                <td >
+                    <a href="{% url 'orders:item_view_request_donation' item.id %}">Request donation</a><br>
+                    <a href="{% url 'products:favorites:remove_favorite' item.id %}">Remove from favorites</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+<p>There are no items in your favorites list.</p>
+<p>Go to our list of <a href="{% url 'products:items:list' %}"> product categories </a>to choose the items you like.</p>
+{% endif %}
+{% endblock %}

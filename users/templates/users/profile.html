@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+  {% if user.profile.avatar %}
+    <img src="{{ user.profile.avatar.url }}" width="20" height="20" style="border-radius: 100%;" />
+  {% else %}
+    <i class="fas fa-user"></i>
+  {% endif %}
+  <h3>Hey, {{ user.first_name }} {{ user.last_name }}!</h3>
+{% endblock %}

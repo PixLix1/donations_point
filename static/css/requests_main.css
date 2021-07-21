@@ -1,0 +1,27 @@
+.flex-container {
+    display: flex;
+    height: 50%;
+}
+
+.flex-child {
+    flex: 1;
+    background-color: green;
+    width: 80%;
+    text-align: center;
+    background-image: url("../images/donate.jpg");
+    background-color: #cccccc;
+    background-position: center;
+}
+
+.flex-child:first-child {
+    margin-right: 20px;
+    width: 80%;
+    background-image: url("../images/receive.jpg");
+    background-color: #cccccc;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+
+}

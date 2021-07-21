@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/auth_user_menu.css' %}"/>
+    <link href="{% static 'fontawesome_free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/products.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+    <ul class="product-list">
+        {% for category in category_list %}
+            <li>
+                <a href="{% url 'products:details' category.id %}">
+                    <div> {{ category.name }} </div>
+                    <img src="{{ category.image.url }}" width="200" style="border-radius:100%">
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
